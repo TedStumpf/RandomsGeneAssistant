@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "LZ7Bp28he8EvtDidzj/OGf1Cwgey95ImGGupUn7JlYdnQNlxDWWRRfmNyefyRXMowPYHqACSl5s2md+OmLShUA==",
+  "success": true,
+  "projectFilePath": "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\RandomsGeneAssistant.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Theodore Stumpf\\.nuget\\packages\\lib.harmony\\2.2.2\\lib.harmony.2.2.2.nupkg.sha512"
+  ],
+  "logs": []
+}

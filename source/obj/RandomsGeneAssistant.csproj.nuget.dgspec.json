@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\RandomsGeneAssistant.csproj": {}
+  },
+  "projects": {
+    "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\RandomsGeneAssistant.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\RandomsGeneAssistant.csproj",
+        "projectName": "RandomsGeneAssistant",
+        "projectPath": "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\RandomsGeneAssistant.csproj",
+        "packagesPath": "C:\\Users\\Theodore Stumpf\\.nuget\\packages\\",
+        "outputPath": "C:\\FastGames\\steamapps\\steamapps\\common\\RimWorld\\Mods\\RandomsGeneAssistant\\source\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Theodore Stumpf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Lib.Harmony": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.413\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

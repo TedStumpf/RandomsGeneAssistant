@@ -1,0 +1,9 @@
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\BiotechClones\1.4\assemblies\RandomsGeneAssistant.dll
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.csproj.AssemblyReference.cache
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.GeneratedMSBuildEditorConfig.editorconfig
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.AssemblyInfoInputs.cache
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.AssemblyInfo.cs
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.csproj.CoreCompileInputs.cache
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.csproj.CopyComplete
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.dll
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.4\assemblies\RandomsGeneAssistant.dll
