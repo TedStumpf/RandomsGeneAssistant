@@ -30,14 +30,15 @@ namespace RandomsGeneAssistant
             if (map == null || !map.IsPlayerHome) { return; }
 
             //  Get genebanks
-            List<Building> banks = new List<Building>(map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.GeneBank));
+            
+            List<Thing> banks = new List<Thing>(map.listerThings.ThingsMatching(ThingRequest.ForGroup(ThingRequestGroup.GenepackHolder)));
             if ((banks == null) || (banks.Count == 0)) { return; }
 
             //  Init tracking vars
             int findQuality = 0;
 
             //  Loop through buildings
-            foreach (Building b in banks)
+            foreach (Thing b in banks)
             {
                 //  Get the genepacks
                 CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
@@ -264,9 +265,9 @@ namespace RandomsGeneAssistant
             //  Get the genepack
             Genepack genepack = (Genepack) trad.AnyThing;
             if (genepack == null) { return; }
-            
+
             //  Get genebanks
-            List<Building> banks = new List<Building>(map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.GeneBank));
+            List<Thing> banks = new List<Thing>(map.listerThings.ThingsMatching(ThingRequest.ForGroup(ThingRequestGroup.GenepackHolder)));
             if ((banks == null) || (banks.Count == 0)) { return; }
 
             //  Init tracking vars
@@ -281,7 +282,7 @@ namespace RandomsGeneAssistant
             int minVal = 0;
 
             //  Loop through buildings
-            foreach (Building b in banks)
+            foreach (Thing b in banks)
             {
                 //  Get the genepacks
                 CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
