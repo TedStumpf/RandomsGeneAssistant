@@ -8,9 +8,9 @@ using UnityEngine;
 namespace RandomsGeneAssistant
 {
     [StaticConstructorOnStartup]
-    public static class GeneStatusColor
+    public static class HarmonyPatcher
     {
-        static GeneStatusColor()
+        static HarmonyPatcher()
         {
             Harmony harmony = new Harmony("rimworld.randomcoughdrop.geneassistant");
             harmony.PatchAll();
@@ -72,14 +72,14 @@ namespace RandomsGeneAssistant
             Rect rect1 = geneRect.AtZero();
             if (doBackground)
             {
-                Color c = new Color(0.8f, 0f, 0f, 0.4f);
+                Color c = new Color(SettingsRef.sat, 0f, 0f, 0.4f);
                 if (findQuality == 1)
                 {
-                    c = new Color(0.8f, 0.8f, 0f, 0.4f);
+                    c = new Color(SettingsRef.sat, SettingsRef.sat, 0f, 0.4f);
                 }
                 else if (findQuality == 2)
                 {
-                    c = new Color(0f, 0.8f, 0f, 0.4f);
+                    c = new Color(0f, SettingsRef.sat, 0f, 0.4f);
                 }
                 Widgets.DrawBoxSolid(rect1, c);
                 GUI.color = new Color(1f, 1f, 1f, 0.05f);
@@ -186,7 +186,7 @@ namespace RandomsGeneAssistant
     [HarmonyPatch]
     public static class GeneAssemblerFilledSlots
     {
-        //  Taken from the Genebank
+        //  Taken from the Gene Assembler
         [HarmonyPatch(typeof(Building_GeneAssembler), nameof(Building_GeneAssembler.GetInspectString))]
         [HarmonyPostfix]
         public static void GetInspectString_Postfix(Building_GeneAssembler __instance, ref string __result)
@@ -210,6 +210,129 @@ namespace RandomsGeneAssistant
             }
 
             __result += "\nFilled Slots: " + filled + "/" + total;
+        }
+    }
+
+    [HarmonyPatch]
+    public static class SortGenepacksOverride
+    {
+        [HarmonyPatch(typeof(GeneUtility), nameof(GeneUtility.SortGenepacks))]
+        [HarmonyPrefix]
+        public static bool SortGenepacks_Prefix(List<Genepack> genepacks)
+        {
+            if (SettingsRef.overrideSorting)
+            {
+                List<GeneDef> order = GeneUtility.GenesInOrder;
+                if (SettingsRef.singlesFirst)
+                {
+                    genepacks.SortBy((x => x.GeneSet.GenesListForReading.Count == 1 ? 0 : 1), (x => order.IndexOf(OrderAndGetFirst(order, x.GeneSet.GenesListForReading))));
+                }
+                else
+                {
+                    genepacks.SortBy(x => order.IndexOf(OrderAndGetFirst(order, x.GeneSet.GenesListForReading)));
+                }
+
+                return false;
+            }
+            //  Use default sorting
+            return true;
+        }
+
+        private static GeneDef OrderAndGetFirst(List<GeneDef> order, List<GeneDef> set)
+        {
+            List<GeneDef> localSet = new List<GeneDef>(set);
+            localSet.SortBy(x => -x.biostatCpx, x => -Mathf.Abs(x.biostatMet), x => order.IndexOf(x));
+            return localSet[0];
+        }
+    }
+
+    [HarmonyPatch]
+    public static class TraderColorChange
+    {
+        [HarmonyPatch(typeof(TradeUI), nameof(TradeUI.DrawTradeableRow))]
+        [HarmonyPrefix]
+        public static void DrawTradeableRow_Prefix(Rect rect, Tradeable trad, int index)
+        {
+            if (trad.ThingDef != ThingDefOf.Genepack) { return; }
+            Map map = Find.CurrentMap;
+            if (map  == null)
+            {
+                map = Find.AnyPlayerHomeMap;
+            }
+            if (map == null || !map.IsPlayerHome) { return; }
+
+            //  Get the genepack
+            Genepack genepack = (Genepack) trad.AnyThing;
+            if (genepack == null) { return; }
+            
+            //  Get genebanks
+            List<Building> banks = new List<Building>(map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.GeneBank));
+            if ((banks == null) || (banks.Count == 0)) { return; }
+
+            //  Init tracking vars
+            Dictionary<GeneDef, int> trackingStaus = new Dictionary<GeneDef, int>();
+            foreach(GeneDef gd in genepack.GeneSet.GenesListForReading)
+            {
+                trackingStaus.Add(gd, 0);
+                //  0 - Does not have
+                //  1 - Has but in pack with other genes
+                //  2 - Can replicate fully, don't buy
+            }
+            int minVal = 0;
+
+            //  Loop through buildings
+            foreach (Building b in banks)
+            {
+                //  Get the genepacks
+                CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
+                foreach (Genepack gp in comp.ContainedGenepacks)
+                {
+                    //  Scan each gene
+                    if (gp.GeneSet.GenesListForReading.TrueForAll(x => trackingStaus.ContainsKey(x)))
+                    {
+                        //  Scanned pack is a subset of trade pack
+                        foreach (GeneDef g in gp.GeneSet.GenesListForReading)
+                        {
+                            trackingStaus[g] = 2;
+                        }
+                    }
+                    else
+                    {
+                        //  Gene by gene comparison
+                        foreach (GeneDef g in gp.GeneSet.GenesListForReading)
+                        {
+                            if ((trackingStaus.ContainsKey(g)) && (trackingStaus[g] == 0))
+                            {
+                                trackingStaus[g] = 1;
+                            }
+                        }
+                    }
+
+                    minVal = trackingStaus.MinBy(kvp => kvp.Value).Value;
+                    if (minVal == 2)
+                    {
+                        break;
+                    }
+                }
+                if (minVal == 2)
+                {
+                    break;
+                }
+            }
+
+            //  Draw our own background
+            Rect rect1 = new Rect(rect.width - 75f, 0.0f, 75f, rect.height);
+            Color c = new Color(SettingsRef.sat, 0f, 0f, 0.3f);
+            if (minVal == 1)
+            {
+                c = new Color(SettingsRef.sat, SettingsRef.sat, 0f, 0.3f);
+            }
+            else if (minVal == 2)
+            {
+                c = new Color(0f, SettingsRef.sat, 0f, 0.3f);
+            }
+            Widgets.DrawBoxSolid(rect, c);
+            GUI.color = Color.white;
         }
     }
 }

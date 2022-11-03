@@ -8,7 +8,7 @@
 		<li>1.4</li>
   	</supportedVersions>
 	<packageId>rimworld.randomcoughdrop.geneassistant</packageId>
-	<description>Adds a colored background to a pawn's gene list, indicating extraction status.\nAlso adds a button to the gene assembler that ejects all duplicate genepacks.</description>
+	<description>Adds a colored background to a pawn's gene list and traders, indicating extraction status.\nAdds a button to the gene assembler that ejects all duplicate genepacks.\nTweaks the sorting in the xenogerm menu for easier xenogerm creation.</description>
 		<modDependencies>
 		<li>
 			<packageId>Ludeon.RimWorld.Biotech</packageId>
