@@ -73,14 +73,14 @@ namespace RandomsGeneAssistant
             Rect rect1 = geneRect.AtZero();
             if (doBackground)
             {
-                Color c = new Color(SettingsRef.sat, 0f, 0f, 0.4f);
+                Color c = SettingsRef.red;
                 if (findQuality == 1)
                 {
-                    c = new Color(SettingsRef.sat, SettingsRef.sat, 0f, 0.4f);
+                    c = SettingsRef.yellow;
                 }
                 else if (findQuality == 2)
                 {
-                    c = new Color(0f, SettingsRef.sat, 0f, 0.4f);
+                    c = SettingsRef.green;
                 }
                 Widgets.DrawBoxSolid(rect1, c);
                 GUI.color = new Color(1f, 1f, 1f, 0.05f);
@@ -375,14 +375,14 @@ namespace RandomsGeneAssistant
 
             //  Draw our own background
             Rect rect1 = new Rect(rect.width - 75f, 0.0f, 75f, rect.height);
-            Color c = new Color(SettingsRef.sat, 0f, 0f, 0.3f);
+            Color c = SettingsRef.red;
             if (minVal == 1)
             {
-                c = new Color(SettingsRef.sat, SettingsRef.sat, 0f, 0.3f);
+                c = SettingsRef.yellow;
             }
             else if (minVal == 2)
             {
-                c = new Color(0f, SettingsRef.sat, 0f, 0.3f);
+                c = SettingsRef.green;
             }
             Widgets.DrawBoxSolid(rect, c);
             GUI.color = Color.white;
