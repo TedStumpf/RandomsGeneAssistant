@@ -106,14 +106,22 @@ namespace RandomsGeneAssistant
         public static void GetGizmos_Postfix(Building_GeneAssembler __instance, ref IEnumerable<Gizmo> __result)
         {
             Command_Action commandActionEject = new Command_Action();
-            commandActionEject.defaultLabel = "Eject Duplicates";
-            commandActionEject.defaultDesc = "Ejects all duplicate genepacks for ease of selling.";
+            commandActionEject.defaultLabel = "Eject Genepacks";
+            commandActionEject.defaultDesc = "Ejects all duplicate genepacks for ease of selling. Contains an option to eject all cosmetic genepacks.";
             commandActionEject.icon = (Texture)EjectTex.Texture;
-            commandActionEject.action = new Action(() => EjectDuplicateGenepacks(__instance));
+            commandActionEject.action = new Action(() => EjectionSelection(__instance));
 
             List<Gizmo> gizmoList = new List<Gizmo>(__result);
             gizmoList.Add(commandActionEject);
             __result = gizmoList;
+        }
+
+        public static void EjectionSelection(Building_GeneAssembler source)
+        {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            options.Add(new FloatMenuOption("Eject Duplicates", () => EjectDuplicateGenepacks(source)));
+            options.Add(new FloatMenuOption("Eject Cosmetic", () => EjectCosmeticGenepacks(source)));
+            Find.WindowStack.Add((Window)new FloatMenu(options));
         }
 
         public static void EjectDuplicateGenepacks(Building_GeneAssembler source)
@@ -176,6 +184,50 @@ namespace RandomsGeneAssistant
             if (markedForEjection.Count == 0)
             {
                 Messages.Message("No duplicate genepacks.", MessageTypeDefOf.NegativeEvent, false);
+            }
+            else
+            {
+                Messages.Message("Ejected " + markedForEjection.Count + " genepacks.", MessageTypeDefOf.PositiveEvent, false);
+            }
+        }
+
+        public static void EjectCosmeticGenepacks(Building_GeneAssembler source)
+        {
+            //  Ejects genepacks that contain all 0 complexity genes
+            List<Genepack> allPacks = source.GetGenepacks(true, true);
+            List<Genepack> markedForEjection = new List<Genepack>();
+
+            //  Scan for redundant sets
+            foreach (Genepack gp in allPacks)
+            {
+                bool cosOnly = true;
+                foreach (GeneDef def in gp.GeneSet.GenesListForReading)
+                {
+                    if (def.biostatCpx != 0)
+                    {
+                        cosOnly = false;
+                        break;
+                    }
+                }
+
+                if (cosOnly)
+                {
+                    markedForEjection.Add(gp);
+                }
+            }
+
+            //  Eject genepacks
+            foreach (Genepack gp in markedForEjection)
+            {
+                CompGenepackContainer holder = source.GetGeneBankHoldingPack(gp);
+                Map destMap = holder.parent.Map;
+                holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout);
+            }
+
+            //  Alert user
+            if (markedForEjection.Count == 0)
+            {
+                Messages.Message("No cosmetic genepacks.", MessageTypeDefOf.NegativeEvent, false);
             }
             else
             {
