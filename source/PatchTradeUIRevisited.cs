@@ -19,10 +19,7 @@ namespace RandomsGeneAssistant
 
         public static MethodBase TargetMethod()
         {
-            //Log.Message("Type: " + AccessTools.TypeByName("TradeUIRework").Name + " in " + AccessTools.TypeByName("TradeUIRework").Namespace);
-            //MethodInfo mi = AccessTools.FirstMethod(AccessTools.TypeByName("Harmony_DialogTrade_FillMainRect"), m => m.IsPublic && m.IsStatic && m.ReturnType == typeof(void));
             MethodInfo mi = AccessTools.FirstMethod(AccessTools.TypeByName("Harmony_DialogTrade_FillMainRect"), m => m.Name == "MyDrawTradableRow");
-            //Log.Message("Methods: " + (mi == null ? "null" : mi.Name));
             return mi;
         }
 
@@ -30,7 +27,6 @@ namespace RandomsGeneAssistant
         [HarmonyPrefix]
         public static void Prefix(Rect mainRect, Tradeable trad, int index, bool isOurs)
         {
-            Log.Message("Trade row!");
             if (trad.ThingDef != ThingDefOf.Genepack) { return; }
             Map map = Find.CurrentMap;
             if (map == null)
