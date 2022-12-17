@@ -47,6 +47,7 @@ namespace RandomsGeneAssistant
             List<Genepack> allPacks = source.GetGenepacks(true, true);
             List<Genepack> markedForEjection = new List<Genepack>();
             HashSet<GeneDef> soloDefs = new HashSet<GeneDef>();
+            soloDefs.AddRange(SettingsRef.ignoredGenes);
 
             //  Build list of solo genes
             foreach (Genepack gp in allPacks)

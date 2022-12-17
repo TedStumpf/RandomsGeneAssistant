@@ -26,22 +26,33 @@ namespace RandomsGeneAssistant
             //  Init tracking vars
             int findQuality = 0;
 
-            //  Loop through buildings
-            foreach (Thing b in banks)
+            if (SettingsRef.ignoredGenes.Contains(gene.def))
             {
-                //  Get the genepacks
-                CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
-                foreach (Genepack gp in comp.ContainedGenepacks)
+                findQuality = -1;
+            }
+            else
+            {
+                //  Loop through buildings
+                foreach (Thing b in banks)
                 {
-                    //  Scan each gene
-                    foreach (GeneDef g in gp.GeneSet.GenesListForReading)
+                    //  Get the genepacks
+                    CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
+                    foreach (Genepack gp in comp.ContainedGenepacks)
                     {
-                        if (g == gene.def)
+                        //  Scan each gene
+                        foreach (GeneDef g in gp.GeneSet.GenesListForReading)
                         {
-                            findQuality = gp.GeneSet.GenesListForReading.Count == 1 ? 2 : 1;
-                        }
+                            if (g == gene.def)
+                            {
+                                findQuality = gp.GeneSet.GenesListForReading.Count == 1 ? 2 : 1;
+                            }
 
-                        if (findQuality > 0)
+                            if (findQuality > 0)
+                            {
+                                break;
+                            }
+                        }
+                        if (findQuality == 2)
                         {
                             break;
                         }
@@ -50,10 +61,6 @@ namespace RandomsGeneAssistant
                     {
                         break;
                     }
-                }
-                if (findQuality == 2)
-                {
-                    break;
                 }
             }
 
@@ -70,6 +77,10 @@ namespace RandomsGeneAssistant
                 else if (findQuality == 2)
                 {
                     c = SettingsRef.green;
+                }
+                else if (findQuality == -1)
+                {
+                    c = SettingsRef.gray;
                 }
                 Widgets.DrawBoxSolid(rect1, c);
                 GUI.color = new Color(1f, 1f, 1f, 0.05f);

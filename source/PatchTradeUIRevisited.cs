@@ -52,45 +52,55 @@ namespace RandomsGeneAssistant
                 //  1 - Has but in pack with other genes
                 //  2 - Can replicate fully, don't buy
             }
-            int minVal = 0;
-
-            //  Loop through buildings
-            foreach (Thing b in banks)
+            foreach (GeneDef gd in SettingsRef.ignoredGenes)
             {
-                //  Get the genepacks
-                CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
-                foreach (Genepack gp in comp.ContainedGenepacks)
+                if (trackingStaus.ContainsKey(gd))
                 {
-                    //  Scan each gene
-                    if (gp.GeneSet.GenesListForReading.TrueForAll(x => trackingStaus.ContainsKey(x)))
+                    trackingStaus[gd] = 2;
+                }
+            }
+            int minVal = trackingStaus.MinBy(kvp => kvp.Value).Value;
+
+            if (minVal < 2)
+            {
+                //  Loop through buildings
+                foreach (Thing b in banks)
+                {
+                    //  Get the genepacks
+                    CompGenepackContainer comp = b.TryGetComp<CompGenepackContainer>();
+                    foreach (Genepack gp in comp.ContainedGenepacks)
                     {
-                        //  Scanned pack is a subset of trade pack
-                        foreach (GeneDef g in gp.GeneSet.GenesListForReading)
+                        //  Scan each gene
+                        if (gp.GeneSet.GenesListForReading.TrueForAll(x => trackingStaus.ContainsKey(x)))
                         {
-                            trackingStaus[g] = 2;
-                        }
-                    }
-                    else
-                    {
-                        //  Gene by gene comparison
-                        foreach (GeneDef g in gp.GeneSet.GenesListForReading)
-                        {
-                            if ((trackingStaus.ContainsKey(g)) && (trackingStaus[g] == 0))
+                            //  Scanned pack is a subset of trade pack
+                            foreach (GeneDef g in gp.GeneSet.GenesListForReading)
                             {
-                                trackingStaus[g] = 1;
+                                trackingStaus[g] = 2;
                             }
                         }
-                    }
+                        else
+                        {
+                            //  Gene by gene comparison
+                            foreach (GeneDef g in gp.GeneSet.GenesListForReading)
+                            {
+                                if ((trackingStaus.ContainsKey(g)) && (trackingStaus[g] == 0))
+                                {
+                                    trackingStaus[g] = 1;
+                                }
+                            }
+                        }
 
-                    minVal = trackingStaus.MinBy(kvp => kvp.Value).Value;
+                        minVal = trackingStaus.MinBy(kvp => kvp.Value).Value;
+                        if (minVal == 2)
+                        {
+                            break;
+                        }
+                    }
                     if (minVal == 2)
                     {
                         break;
                     }
-                }
-                if (minVal == 2)
-                {
-                    break;
                 }
             }
 
