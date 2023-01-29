@@ -20,7 +20,7 @@ namespace RandomsGeneAssistant
             foreach (var thing in source)
             {
 
-                if (!(thing is Genepack genepack))
+                if (SettingsRef.sellFromGeneBanks || (!(thing is Genepack genepack)))
                     yield return thing;
 
                 else if (getParentContainer(genepack) == null)

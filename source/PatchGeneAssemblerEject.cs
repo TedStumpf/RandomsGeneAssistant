@@ -36,6 +36,7 @@ namespace RandomsGeneAssistant
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             options.Add(new FloatMenuOption("Eject Duplicates", () => EjectDuplicateGenepacks(source)));
             options.Add(new FloatMenuOption("Eject Cosmetic", () => EjectCosmeticGenepacks(source)));
+            options.Add(new FloatMenuOption("Eject Combined Genepacks", () => EjectCombinedGenepacks(source)));
             Find.WindowStack.Add((Window)new FloatMenu(options));
         }
 
@@ -119,7 +120,7 @@ namespace RandomsGeneAssistant
                 bool cosOnly = true;
                 foreach (GeneDef def in gp.GeneSet.GenesListForReading)
                 {
-                    if (def.biostatCpx != 0)
+                    if ((def.biostatCpx != 0) || (def.biostatMet != 0))
                     {
                         cosOnly = false;
                         break;
@@ -127,6 +128,42 @@ namespace RandomsGeneAssistant
                 }
 
                 if (cosOnly)
+                {
+                    markedForEjection.Add(gp);
+                }
+            }
+
+
+
+            //  Eject genepacks
+            foreach (Genepack gp in markedForEjection)
+            {
+                CompGenepackContainer holder = source.GetGeneBankHoldingPack(gp);
+                Map destMap = holder.parent.Map;
+                holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout);
+            }
+
+            //  Alert user
+            if (markedForEjection.Count == 0)
+            {
+                Messages.Message("No cosmetic genepacks.", MessageTypeDefOf.NegativeEvent, false);
+            }
+            else
+            {
+                Messages.Message("Ejected " + markedForEjection.Count + " genepacks.", MessageTypeDefOf.PositiveEvent, false);
+            }
+        }
+
+        public static void EjectCombinedGenepacks(Building_GeneAssembler source)
+        {
+            //  Ejects genepacks that contain all 0 complexity genes
+            List<Genepack> allPacks = source.GetGenepacks(true, true);
+            List<Genepack> markedForEjection = new List<Genepack>();
+
+            //  Scan for redundant sets
+            foreach (Genepack gp in allPacks)
+            {
+                if (gp.GeneSet.GenesListForReading.Count > 1)
                 {
                     markedForEjection.Add(gp);
                 }
@@ -143,7 +180,7 @@ namespace RandomsGeneAssistant
             //  Alert user
             if (markedForEjection.Count == 0)
             {
-                Messages.Message("No cosmetic genepacks.", MessageTypeDefOf.NegativeEvent, false);
+                Messages.Message("No combined genepacks.", MessageTypeDefOf.NegativeEvent, false);
             }
             else
             {
