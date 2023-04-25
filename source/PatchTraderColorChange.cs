@@ -14,7 +14,6 @@ namespace RandomsGeneAssistant
         [HarmonyPrefix]
         public static void DrawTradeableRow_Prefix(Rect rect, Tradeable trad, int index)
         {
-            if (trad.ThingDef != ThingDefOf.Genepack) { return; }
             Map map = Find.CurrentMap;
             if (map == null)
             {
@@ -23,7 +22,7 @@ namespace RandomsGeneAssistant
             if (map == null || !map.IsPlayerHome) { return; }
 
             //  Get the genepack
-            Genepack genepack = (Genepack)trad.AnyThing;
+            Genepack genepack = trad.AnyThing as Genepack;
             if (genepack == null) { return; }
 
             //  Get genebanks
