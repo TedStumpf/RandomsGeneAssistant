@@ -7,3 +7,4 @@ C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\sourc
 C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.csproj.CopyComplete
 C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\source\obj\Release\RandomsGeneAssistant.dll
 C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.4\assemblies\RandomsGeneAssistant.dll
+C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.5\assemblies\RandomsGeneAssistant.dll

@@ -16,6 +16,7 @@ namespace RandomsGeneAssistant
             harmony.PatchAll();
             PatchTradeUIRevisited.HandlePatch(harmony);
             PatchGeneripperUI.HandlePatch(harmony);
+            PatchCharacterEditor.HandlePatch(harmony);
         }
     }
 }

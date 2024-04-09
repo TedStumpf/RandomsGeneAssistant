@@ -126,7 +126,15 @@ namespace RandomsGeneAssistant
                     new Rect(inRect.xMin + (CloseButSize.x + sep) * 3, inRect.yMax, CloseButSize.x,
                         CloseButSize.y), "Switch Visibility"))
             {
-                PatchGeneLibrary.hideState = (PatchGeneLibrary.hideState + 1) % 6;
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                options.Add(new FloatMenuOption("Show all genes", () => { PatchGeneLibrary.hideState = 0; }));
+                options.Add(new FloatMenuOption("Hide fully acquired genes", () => { PatchGeneLibrary.hideState = 1; }));
+                options.Add(new FloatMenuOption("Hide fully and partially acquired genes", () => { PatchGeneLibrary.hideState = 2; }));
+                options.Add(new FloatMenuOption("Hide ignored genes", () => { PatchGeneLibrary.hideState = 3; }));
+                options.Add(new FloatMenuOption("Hide fully acquired and ignored genes", () => { PatchGeneLibrary.hideState = 4; }));
+                options.Add(new FloatMenuOption("Hide fully, partially acquired and ignored genes", () => { PatchGeneLibrary.hideState = 5; }));
+                Find.WindowStack.Add((Window)new FloatMenu(options));
+                //PatchGeneLibrary.hideState = (PatchGeneLibrary.hideState + 1) % 6;
             }
 
             //  Save and close
