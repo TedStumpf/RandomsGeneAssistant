@@ -120,7 +120,7 @@ namespace RandomsGeneAssistant
                 bool cosOnly = true;
                 foreach (GeneDef def in gp.GeneSet.GenesListForReading)
                 {
-                    if ((def.biostatCpx != 0) || (def.biostatMet != 0))
+                    if ((def.biostatCpx != 0) || (def.biostatMet != 0) || (def.biostatArc != 0))
                     {
                         cosOnly = false;
                         break;
