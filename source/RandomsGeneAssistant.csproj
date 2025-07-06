@@ -13,12 +13,12 @@
 
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\BiotechClones\1.4\assemblies\</OutputPath>
+    <OutputPath>C:\Program Files\Steam\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.6\Assemblies</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>C:\FastGames\steamapps\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.4\assemblies\</OutputPath>
+    <OutputPath>C:\Program Files\Steam\steamapps\common\RimWorld\Mods\RandomsGeneAssistant\1.6\Assemblies</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -31,81 +31,81 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="TradeUI">
       <HintPath>..\..\..\..\..\workshop\content\294100\2683622537\v1.4\Assemblies\TradeUI.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.InputModule.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Core">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Data">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Drawing">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.IO.Compression.FileSystem">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Numerics">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Runtime.Serialization">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Xml">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Reference Update="System.Xml.Linq">
-      <Private>false</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 
