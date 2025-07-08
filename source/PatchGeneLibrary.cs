@@ -153,7 +153,7 @@ namespace RandomsGeneAssistant
             HashSet<GeneDef> geneList = new HashSet<GeneDef>();
             foreach (GeneDef gene in GeneUtility.GenesInOrder)
             {
-                if ((gene.biostatCpx == 0) && (gene.biostatMet == 0))
+                if ((gene.biostatCpx == 0) && (gene.biostatMet == 0) && (gene.biostatArc == 0))
                 {
                     geneList.Add(gene);
                 }
