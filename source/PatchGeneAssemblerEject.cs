@@ -4,6 +4,7 @@ using Verse;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
+using System.Reflection;
 
 namespace RandomsGeneAssistant
 {
@@ -13,6 +14,8 @@ namespace RandomsGeneAssistant
     [HarmonyPatch]
     public static class PatchGeneAssemblerEject
     {
+        private static FieldInfo gp_autoLoad = AccessTools.Field(typeof(Genepack), "autoLoad");
+
         //  Taken from the Genebank
         private static readonly CachedTexture EjectTex = new CachedTexture("UI/Gizmos/EjectAll");
 
@@ -94,7 +97,10 @@ namespace RandomsGeneAssistant
             {
                 CompGenepackContainer holder = source.GetGeneBankHoldingPack(gp);
                 Map destMap = holder.parent.Map;
-                holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout);
+                if (holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout))
+                {
+                    gp_autoLoad.SetValue(gp, false);
+                }
             }
 
             //  Alert user
@@ -140,7 +146,10 @@ namespace RandomsGeneAssistant
             {
                 CompGenepackContainer holder = source.GetGeneBankHoldingPack(gp);
                 Map destMap = holder.parent.Map;
-                holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout);
+                if (holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout))
+                {
+                    gp_autoLoad.SetValue(gp, false);
+                }
             }
 
             //  Alert user
@@ -174,7 +183,10 @@ namespace RandomsGeneAssistant
             {
                 CompGenepackContainer holder = source.GetGeneBankHoldingPack(gp);
                 Map destMap = holder.parent.Map;
-                holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout);
+                if (holder.innerContainer.TryDrop(gp, ThingPlaceMode.Near, out Thing thingout))
+                {
+                    gp_autoLoad.SetValue(gp, false);
+                }
             }
 
             //  Alert user
